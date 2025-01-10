@@ -1,3 +1,9 @@
+.DS_Store
+.history
+.vscode
+*.swp
+# .env should be excluded from versioning, but in this case, it's convenient for sharing
+#/.env
 
 ###> symfony/framework-bundle ###
 /.env.local
