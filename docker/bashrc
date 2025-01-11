@@ -1,0 +1,36 @@
+# ~/.bashrc: executed by bash(1) for non-login shells.
+
+HISTCONTROL=ignoreboth:erasedups
+HISTSIZE=2000
+HISTFILESIZE=6000
+
+# Note: PS1 and umask are already set in /etc/profile. You should not
+# need this unless you want different defaults for root.
+# PS1='${debian_chroot:+($debian_chroot)}\h:\w\$ '
+PROMPT_U_COLOR='0;1;32m'
+PROMPT_H_COLOR='0;37m'
+PROMPT_W_COLOR='1;33m'
+if [[ "$(whoami)" == "root" ]]; then
+    PROMPT_U_COLOR='0;1;31m'
+    PROMPT_H_COLOR='1;32m'
+    PROMPT_W_COLOR='1;34m'
+fi
+PS1='${debian_chroot:+($debian_chroot)}\[\033[${PROMPT_U_COLOR}\]\u\[\033[${PROMPT_H_COLOR}\]@\h\[\033[0m\]:\[\033[${PROMPT_W_COLOR}\]\w\[\033[0m\]\$ '
+# umask 022
+
+# You may uncomment the following lines if you want `ls' to be colorized:
+export LS_OPTIONS='--color=auto'
+# eval "`dircolors`"
+alias ls='ls $LS_OPTIONS'
+alias ll='ls $LS_OPTIONS -l'
+alias lla='ls -alF'
+alias l='ls $LS_OPTIONS -CF'
+alias l.='ls -d .*'
+
+# Some more alias to avoid making mistakes:
+alias rm='rm -i'
+alias cp='cp -i'
+alias mv='mv -i'
+
+# To make the "symfony" command always available
+export PATH="$HOME/.symfony5/bin:$PATH"
