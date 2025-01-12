@@ -17,7 +17,7 @@ class Character
     private ?string $name = null;
 
     #[ORM\ManyToOne(inversedBy: 'characters')]
-    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\JoinColumn]
     private ?Movie $movie = null;
 
     public function getId(): ?int

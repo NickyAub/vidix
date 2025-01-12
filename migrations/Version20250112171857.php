@@ -20,7 +20,7 @@ final class Version20250112171857 extends AbstractMigration
     public function up(Schema $schema): void
     {
         // this up() migration is auto-generated, please modify it to your needs
-        $this->addSql('ALTER TABLE character ADD movie_id INT NOT NULL');
+        $this->addSql('ALTER TABLE character ADD movie_id INT');
         $this->addSql('ALTER TABLE character ADD CONSTRAINT FK_937AB0348F93B6FC FOREIGN KEY (movie_id) REFERENCES movie (id) NOT DEFERRABLE INITIALLY IMMEDIATE');
         $this->addSql('CREATE INDEX IDX_937AB0348F93B6FC ON character (movie_id)');
     }
