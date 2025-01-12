@@ -24,7 +24,7 @@
                 {% for movie in movies %}
                     <tr>
                         {# <th scope="row">{{ movie.id }}</th> #}
-                        <td>{{ movie.title }}</td>
+                        <td><a href="{{ path('app.movie.view', { 'id': movie.id }) }}">{{ movie.title }}</a></td>
                         {# <td>{{ movie.description|u.truncate(100, '...', false) }}</td> #}
                         <td>{{ movie.releaseDate|date('d M Y') }}</td>
                     </tr>
@@ -32,8 +32,8 @@
                 </tbody>
             </table>
 
-            <div class="navigation d-flex justify-content-center mt-4">
-                {{ knp_pagination_render(movies) }}
+            <div class="navigation mt-4">
+                {{ knp_pagination_render(movies, null, {}, {'align': 'center'}) }}
             </div>
         {% else %}
             <p class="my-5"><i>Aucun film trouvé pour le moment...</i></p>
