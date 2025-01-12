@@ -2,26 +2,48 @@
 
 {% block title %}Liste des films - Vidéothèque{% endblock %}
 
+{% block head_extra %}
+    {{ knp_pagination_rel_links(movies) }}
+{% endblock %}
+
 {% block body %}
     <div class="container mt-4">
-        <h1>Liste des films</h1>
-        <table class="table">
-            <thead>
-                <tr>
-                    <th scope="col">Titre</th>
-                    <th scope="col">Description</th>
-                    <th scope="col">Date de sortie</th>
-                </tr>
-            </thead>
-            <tbody class="table-group-divider">
-            {% for movie in movies %}
-                <tr>
-                    <td>{{ movie.title }}</td>
-                    <td>{{ movie.description|u.truncate(100, '...', false) }}</td>
-                    <td>{{ movie.releaseDate|date('d M Y') }}</td>
-                </tr>
-            {% endfor %}
-            </tbody>
+        <h1>Liste des films <span class="badge text-bg-secondary">{{ movies.getTotalItemCount }}</span></h1>
+
+        {% if movies.getTotalItemCount %}
+            <table class="table">
+                <thead>
+                    <tr>
+                        {# <th scope="col">#</th> #}
+                        <th scope="col"{% if movies.isSorted('title') %} class="sorted"{% endif %}>{{ knp_pagination_sortable(movies, 'Titre', 'title') }}</th>
+                        {# <th scope="col">Description</th> #}
+                        <th scope="col"{% if movies.isSorted('releaseDate') %} class="sorted"{% endif %}>{{ knp_pagination_sortable(movies, 'Date de sortie', 'releaseDate') }}</th>
+                    </tr>
+                </thead>
+                <tbody class="table-group-divider">
+                {% for movie in movies %}
+                    <tr>
+                        {# <th scope="row">{{ movie.id }}</th> #}
+                        <td>{{ movie.title }}</td>
+                        {# <td>{{ movie.description|u.truncate(100, '...', false) }}</td> #}
+                        <td>{{ movie.releaseDate|date('d M Y') }}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
             </table>
+
+            <div class="navigation d-flex justify-content-center mt-4">
+                {{ knp_pagination_render(movies) }}
+            </div>
+        {% else %}
+            <p class="my-5"><i>Aucun film trouvé pour le moment...</i></p>
+            <small>
+                <p class="mt-4">Peut-être que vous pouvez remplir la base avec des fausses données en exécutant</p>
+                <div class="container">
+                    <code class="px-4 py-3 rounded-3 text-bg-dark">php bin/console doctrine:fixtures:load</code>
+                </div>
+                <p class="mt-4">... ou alors il est aussi possible de créer un film à la main via la barre de navigation.</p>
+            </small>
+        {% endif %}
     </div>
 {% endblock %}

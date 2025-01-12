@@ -1,3 +1,10 @@
-body {
-    background-color: skyblue;
+.sorted > a::after {
+    display: inline-block;
+    margin-left: 4px;
+}
+.sorted > .asc::after {
+    content: "\2191";
+}
+.sorted > .desc::after {
+    content: "\2193";
 }

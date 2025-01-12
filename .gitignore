@@ -4,6 +4,7 @@
 *.swp
 # .env should be excluded from versioning, but in this case, it's convenient for sharing
 #/.env
+/docker/bash_history
 
 ###> symfony/framework-bundle ###
 /.env.local
