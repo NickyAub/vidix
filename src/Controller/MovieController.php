@@ -26,6 +26,14 @@ class MovieController extends AbstractController
         ]);
     }
 
+    #[Route('/movie/new', name: 'app.movie.new', methods: ['GET', 'POST'])]
+    public function new(): Response
+    {
+        return $this->render('views/movie/new.html.twig', [
+            'form' => [],
+        ]);
+    }
+
     #[Route('/movie/{id}', name: 'app.movie.view', methods: ['GET'])]
     public function view(Movie $movie): Response
     {

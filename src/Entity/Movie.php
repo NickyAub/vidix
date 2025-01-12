@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\MovieRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -27,6 +29,17 @@ class Movie
     #[ORM\Column(type: Types::DATE_IMMUTABLE)]
     #[Assert\NotNull()]
     private ?\DateTimeImmutable $releaseDate = null;
+
+    /**
+     * @var Collection<int, Character>
+     */
+    #[ORM\OneToMany(targetEntity: Character::class, mappedBy: 'movie', orphanRemoval: true)]
+    private Collection $characters;
+
+    public function __construct()
+    {
+        $this->characters = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -65,6 +78,36 @@ class Movie
     public function setReleaseDate(\DateTimeImmutable $releaseDate): static
     {
         $this->releaseDate = $releaseDate;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Character>
+     */
+    public function getCharacters(): Collection
+    {
+        return $this->characters;
+    }
+
+    public function addCharacter(Character $character): static
+    {
+        if (!$this->characters->contains($character)) {
+            $this->characters->add($character);
+            $character->setMovie($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCharacter(Character $character): static
+    {
+        if ($this->characters->removeElement($character)) {
+            // set the owning side to null (unless already changed)
+            if ($character->getMovie() === $this) {
+                $character->setMovie(null);
+            }
+        }
 
         return $this;
     }
