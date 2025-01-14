@@ -5,6 +5,8 @@ namespace App\Entity;
 use App\Repository\CharacterRepository;
 use Doctrine\ORM\Mapping as ORM;
 
+use Symfony\Component\Validator\Constraints as Assert;
+
 #[ORM\Entity(repositoryClass: CharacterRepository::class)]
 class Character
 {
@@ -14,6 +16,8 @@ class Character
     private ?int $id = null;
 
     #[ORM\Column(length: 50)]
+    #[Assert\NotBlank()]
+    #[Assert\Length(max: 50)]
     private ?string $name = null;
 
     #[ORM\ManyToOne(inversedBy: 'characters')]

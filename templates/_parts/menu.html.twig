@@ -7,10 +7,10 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         <li class="nav-item">
-          <a class="nav-link{% if app.request.get('_route') == 'app.index' %} active{% endif %}" aria-current="page" href="{{ path('app.index') }}">Home</a>
+          <a class="nav-link{% if app.request.get('_route') == 'app.index' %} active{% endif %}" aria-current="page" href="{{ path('app.index') }}">{{ 'Home'|trans }}</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link{% if app.request.get('_route') == 'app.movies' %} active{% endif %}" href="{{ path('app.movies') }}">Films</a>
+          <a class="nav-link{% if app.request.get('_route') == 'app.movies' %} active{% endif %}" href="{{ path('app.movies') }}">{{ 'Movies'|trans }}</a>
         </li>
       </ul>
     </div>

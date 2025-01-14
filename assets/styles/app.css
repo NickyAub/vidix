@@ -3,8 +3,8 @@
     margin-left: 4px;
 }
 .sorted > .asc::after {
-    content: "\2191";
+    content: "\2193";
 }
 .sorted > .desc::after {
-    content: "\2193";
+    content: "\2191";
 }

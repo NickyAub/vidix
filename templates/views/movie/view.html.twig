@@ -1,19 +1,52 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}{{ movie.title }} - Vidéothèque{% endblock %}
+{% block title %}{{ movie.title }}{% endblock %}
 
 {% block body %}
     <div class="container mt-4">
+
+        {% for message in app.flashes('success') %}
+            <div class="alert alert-success mt-4">
+                {{ message }}
+            </div>
+        {% endfor %}
+
         <h1>{{ movie.title }}</h1>
-        <div class="badge bg-secondary">Sortie : {{ movie.releaseDate|date('d M Y') }}</div>
+        <div class="badge bg-secondary">{{ 'Release'|trans }} : {{ movie.releaseDate|date('d ') ~ movie.releaseDate|date('F')|trans ~ movie.releaseDate|date(' Y') }}</div>
         <div class="mt-4">{{ movie.description }}</div>
-        <div class="mt-4 fw-bold">Personnages</div>
-        <div class="mt-2">
-        {% for character in movie.characters %}
-            <span class="rounded border border-1 px-2 py-1 mx-1">{{ character.name }}</span>
-        {% endfor %}</div>
-        <div class="mt-4">
+        <div class="mt-4 fw-bold">{{ 'Characters'|trans }}</div>
+        <div class="mt-2 d-flex align-items-center flex-wrap">
+            {% for character in movie.characters %}
+                <span class="rounded border border-1 px-2 py-1 mx-1 my-2"><a href="{{ path('app.character.edit', { 'id': character.id }) }}">{{ character.name }}</a></span>
+            {% endfor %}
+            <a href="{{ path('app.character.new', { 'id': movie.id }) }}" class="icon-link btn btn-primary btn-sm">{{ 'Add new character'|trans }}
+                {% include '_parts/components/icons/plus_square.html.twig' %}
+            </a>
+        </div>
+        <div class="d-flex justify-content-between mt-4">
             {% include '_parts/components/link_back_movies.html.twig' %}
+            <a href="{{ path('app.movie.edit', { 'id': movie.id }) }}" class="btn btn-warning" title="{{ 'Edit movie details'|trans }}">{{ 'Edit'|trans }}</a>
+            <button type="button" class="btn btn-danger" title="{{ 'Remove movie'|trans }}" data-bs-toggle="modal" data-bs-target="#deleteModal">{{ 'Remove'|trans }}</button>
         </div>
     </div>
+    <div class="modal" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">{{ 'Remove movie'|trans }}</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="{{ 'Cancel'|trans }}"></button>
+            </div>
+            <div class="modal-body">
+                <p>{{ 'Do you really want to remove'|trans }} "{{ movie.title }}" ?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{ 'Cancel'|trans }}</button>
+                <a href="{{ path('app.movie.delete', { 'id': movie.id }) }}" class="btn btn-danger" role="button" title="{{ 'Remove movie'|trans }}">{{ 'Remove'|trans }}</a>
+            </div>
+            </div>
+        </div>
+    </div>
+
+    {# Used only here for modal needs. Move script to base.html.twig if necessary #}
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
 {% endblock %}

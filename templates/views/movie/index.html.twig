@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Liste des films - Vidéothèque{% endblock %}
+{% block title %}{{ 'Movies list'|trans }}{% endblock %}
 
 {% block head_extra %}
     {{ knp_pagination_rel_links(movies) }}
@@ -8,30 +8,49 @@
 
 {% block body %}
     <div class="container mt-4">
-        <h1>Liste des films <span class="badge text-bg-secondary">{{ movies.getTotalItemCount }}</span></h1>
-        <div>
-            <a href="{{ path('app.movie.new') }}" class="icon-link btn btn-primary">Ajouter un film
-                {% include '_parts/components/icons/plus_square.html.twig' %}
-            </a>
+        <h1>{{ 'Movies list'|trans }} <span class="badge text-bg-secondary">{{ movies.getTotalItemCount }}</span></h1>
+        <div class="d-flex align-items-center justify-content-between mt-4">
+            <div class="mb-3">
+                <a href="{{ path('app.movie.new') }}" class="icon-link btn btn-primary">{{ 'Add movie'|trans }}
+                    {% include '_parts/components/icons/plus_square.html.twig' %}
+                </a>
+
+                <a href="{{ path('app.character.new') }}" class="icon-link btn btn-outline-primary">{{ 'Add new character'|trans }}
+                    {% include '_parts/components/icons/plus_square.html.twig' %}
+                </a>
+            </div>
+
+            {% if movies.getTotalItemCount or filter.field %}
+                {{ knp_pagination_filter(movies, {
+                    'm.title': 'Title',
+                    'm.description': 'Description',
+                }) }}
+            {% endif %}
         </div>
+
+        {% for message in app.flashes('success') %}
+            <div class="alert alert-success mt-4">
+                {{ message }}
+            </div>
+        {% endfor %}
 
         {% if movies.getTotalItemCount %}
             <table class="table mt-4">
                 <thead>
                     <tr>
                         {# <th scope="col">#</th> #}
-                        <th scope="col"{% if movies.isSorted('title') %} class="sorted"{% endif %}>{{ knp_pagination_sortable(movies, 'Titre', 'title') }}</th>
+                        <th scope="col"{% if movies.isSorted('title') %} class="sorted"{% endif %}>{{ knp_pagination_sortable(movies, 'Title'|trans, 'title') }}</th>
                         {# <th scope="col">Description</th> #}
-                        <th scope="col"{% if movies.isSorted('releaseDate') %} class="sorted"{% endif %}>{{ knp_pagination_sortable(movies, 'Date de sortie', 'releaseDate') }}</th>
+                        <th scope="col"{% if movies.isSorted('releaseDate') %} class="sorted"{% endif %}>{{ knp_pagination_sortable(movies, 'Release date'|trans, 'releaseDate') }}</th>
                     </tr>
                 </thead>
                 <tbody class="table-group-divider">
                 {% for movie in movies %}
                     <tr>
                         {# <th scope="row">{{ movie.id }}</th> #}
-                        <td><a href="{{ path('app.movie.view', { 'id': movie.id }) }}">{{ movie.title }}</a></td>
+                        <td><a href="{{ path('app.movie.view', { 'id': movie.id }) }}" class="text-decoration-none">{{ movie.title }}</a></td>
                         {# <td>{{ movie.description|u.truncate(100, '...', false) }}</td> #}
-                        <td>{{ movie.releaseDate|date('d M Y') }}</td>
+                        <td>{{ movie.releaseDate|date('d ') ~ movie.releaseDate|date('M')|trans ~ movie.releaseDate|date(' Y') }}</td>
                     </tr>
                 {% endfor %}
                 </tbody>
@@ -40,14 +59,19 @@
             <div class="navigation mt-4">
                 {{ knp_pagination_render(movies, null, {}, {'align': 'center'}) }}
             </div>
+        {% elseif filter.field %}
+            <p class="my-5"><i>{{ 'No result found'|trans }}...</i></p>
+            <div class="mt-4">
+                {{ 'Edit search filter or go back to'|trans }} <a href="{{ path('app.movies') }}">{{ 'Movies list'|trans }}</a>
+            </div>
         {% else %}
-            <p class="my-5"><i>Aucun film trouvé pour le moment...</i></p>
+            <p class="my-5"><i>{{ 'No movie found in database'|trans }}...</i></p>
             <small>
-                <p class="mt-4">Peut-être que vous pouvez remplir la base avec des fausses données en exécutant</p>
+                <p class="mt-4">{{ 'You may want to generate fake data with following command'|trans }}</p>
                 <div class="container">
                     <code class="px-4 py-3 rounded-3 text-bg-dark">php bin/console doctrine:fixtures:load</code>
                 </div>
-                <p class="mt-4">... ou alors il est aussi possible de créer un film à la main via la barre de navigation.</p>
+                <p class="mt-4">... {{ 'or create a movie manually with button above'|trans }}.</p>
             </small>
         {% endif %}
     </div>

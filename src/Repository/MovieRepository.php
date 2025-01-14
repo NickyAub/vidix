@@ -15,4 +15,23 @@ class MovieRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Movie::class);
     }
+
+    public function findAllFiltered(array $filter = [])
+    {
+        $results = null;
+
+        if (!empty($filter) && !is_null($filter['field']) && !is_null($filter['value'])) {
+            $results = $this->createQueryBuilder('m')
+                ->andWhere('LOWER('.$filter['field'].') LIKE :value')
+                ->setParameter('value', '%'.strtolower($filter['value']).'%')
+                ->getQuery()
+                ->execute()
+            ;
+        }
+        else {
+            $results = $this->findAll();
+        }
+
+        return $results;
+    }
 }

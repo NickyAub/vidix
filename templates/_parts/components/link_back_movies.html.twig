@@ -1,4 +1,4 @@
-<a href="{{ path('app.movies') }}" class="icon-link text-decoration-none">
+<a href="{{ path('app.movies') }}" class="icon-link text-decoration-none" title="{{ title is defined ? title : 'Back to movies list'|trans }}">
     {% include '_parts/components/icons/arrow_left_square.html.twig' %}
-    Retour à la liste des films
+    {{ label is defined ? label : 'Back to movies list'|trans }}
 </a>

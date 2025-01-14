@@ -1,10 +1,17 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}{{ 'Add new movie'|trans }}{% endblock %}
+{% block title %}{{ 'Edit'|trans }} {{ movie.title }}{% endblock %}
 
 {% block body %}
     <div class="container mt-4">
-        <h1>{{ 'Add new movie'|trans }}</h1>
+
+        {% for message in app.flashes('error') %}
+            <div class="alert alert-danger mt-4">
+                {{ message }}
+            </div>
+        {% endfor %}
+
+        <h1>{{ 'Edit'|trans }} "{{ movie.title }}"</h1>
 
         {{ form_start(form) }}
         <div class="form-group">
@@ -40,8 +47,11 @@
         </div>
 
         <div class="form-group mt-4 d-flex justify-content-between">
-            {% include '_parts/components/link_back_movies.html.twig' with { 'label': 'Cancel'|trans, 'title': 'Cancel and go back to movies list'|trans } %}
             {{ form_widget(form.submit) }}
+            <a href="{{ path('app.movie.view', { 'id': movie.id }) }}" class="icon-link text-decoration-none" title="{{ 'Back to movie view'|trans }}">
+                {% include '_parts/components/icons/arrow_left_square.html.twig' %}
+                {{ 'Cancel'|trans }}
+            </a>
         </div>
         {{ form_end(form) }}
     </div>

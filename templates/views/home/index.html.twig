@@ -1,7 +1,45 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello HomeController!{% endblock %}
+{% block title %}Accueil{% endblock %}
 
 {% block body %}
-    <h1 class="text-center">Home page TODO</h1>
+    <h1 class="text-center">Bienvenue sur ViDIX</h1>
+
+    <div class="container">
+        <p>Cette démo permet de :</p>
+        <ul>
+            <li>lister des films (via le menu ci-dessus)
+                <ul>
+                    <li>les trier selon leur titre ou leur date de sortie dans un sens ou dans l'autre</li>
+                    <li>les filtrer en fonction d'un terme</li>
+                </ul>
+            </li>
+            <li>créer des films (à la main ou via des <i>fixtures</i> <code>[env=dev]</code>)</li>
+            <li>voir les fiches des films</li>
+            <li>éditer les fiches des films
+                <ul>
+                    <li>NOTE : le choix a été fait pour l'entité <code>Movie</code> de mettre <code>orphanRemoval: true</code> sur les personnages liés ; ce qui signifie que désélectionner un personnage sur la fiche d'un film en édition le supprimera de la base lors de l'enregistrement des modifications</li>
+                </ul>
+            </li>
+            <li>supprimer un film depuis sa fiche
+                <ul>
+                    <li>NOTE : la suppression d'un film entraînera la suppression de tous ses personnages liés</li>
+                </ul>
+            </li>
+            <li>créer des personnages
+                <ul>
+                    <li>via le bouton <a href="{{ path('app.character.new') }}" class="icon-link btn btn-outline-primary btn-sm">{{ 'Add new character'|trans }} {% include '_parts/components/icons/plus_square.html.twig' %}</a> sur la <a href="{{ path('app.movies') }}">vue "liste" des films</a></li>
+                    <li class="mt-2">via le bouton <button class="btn btn-primary btn-sm">{{ 'Add new character'|trans }} {% include '_parts/components/icons/plus_square.html.twig' %}</button>
+                     sur la fiche d'un film</li>
+                    <li>NOTE : sur la vue de modification d'un film, on ne peut voir que les personnages déjà liés au film consulté et les personnages non liés à un film (ceux qu'on a créés hors d'un film)</li>
+                </ul>
+            </li>
+            <li>éditer les noms des personnages d'un film
+                <ul>
+                    <li>NOTE : le choix a été fait de rendre éditable le personnage depuis un film en cliquant sur son nom et non pas de simplement l'afficher</li>
+                    <li>NOTE : une vue liste des personnages aurait pu être mise en place sur le même principe que la vue liste des films, mais bon, on sort de l'exercice sinon... et puis, où s'arrêter ? 🤔</li>
+                </ul>
+            </li>
+        </ul>
+    </div>
 {% endblock %}

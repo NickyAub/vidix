@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ 'Add new character'|trans }}{% endblock %}
+
+{% block body %}
+    <div class="container mt-4">
+        <h1>{{ 'Add new character'|trans }}</h1>
+
+        {{ form_start(form) }}
+        <div class="form-group">
+            {{ form_label(form.name) }}
+            {{ form_widget(form.name) }}
+            <div class="form-error">
+                {{ form_errors(form.name) }}
+            </div>
+        </div>
+
+        <div class="form-group mt-4">
+            {{ form_label(form.movie) }}
+            {{ form_widget(form.movie) }}
+            <div class="form-error">
+                {{ form_errors(form.movie) }}
+            </div>
+        </div>
+
+        <div class="form-group mt-4 d-flex justify-content-between">
+            {{ form_row(form.submit) }}
+            {% if character.movie.id is defined %}
+                <a href="{{ path('app.movie.view', { 'id': character.movie.id }) }}" class="icon-link text-decoration-none" title="{{ 'Back to movie view'|trans }}">
+                    {% include '_parts/components/icons/arrow_left_square.html.twig' %}
+                    {{ 'Cancel'|trans }}
+                </a>
+            {% else %}
+                <a href="{{ path('app.movies') }}" class="icon-link text-decoration-none" title="{{ 'Back to movies list'|trans }}">
+                    {% include '_parts/components/icons/arrow_left_square.html.twig' %}
+                    {{ 'Cancel'|trans }}
+                </a>
+            {% endif %}
+        </div>
+        {{ form_end(form) }}
+    </div>
+{% endblock %}
