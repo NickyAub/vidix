@@ -21,17 +21,14 @@ docker compose up
 Open another Terminal console and run:
 ```bash
 # If `make` command is available on the host machine
-make install
+make dfl
 ```
 or
 ```bash
 # If you cannot use `make`
-docker compose exec -ti php /bin/bash
-composer install
-php bin/console doctrine:database:create
-php bin/console doctrine:migrations:migrate
-php bin/console doctrine:fixtures:load
+docker compose exec -ti php php bin/console doctrine:fixtures:load --no-interaction
 ```
+This will load fake data into database to start using project quickly.
 
 ## Open a browser
 

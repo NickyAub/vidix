@@ -40,6 +40,13 @@ logs: ## Show live logs (when detached mode)
 sh: ## Connect to the FrankenPHP container
 	@$(PHP_CONT) sh
 
+bash: ## Get inside main container
+	@$(PHP_CONT) /bin/bash
+
+enter: bash
+
+inside: bash
+
 test: ## Start tests with phpunit, pass the parameter "c=" to add options to phpunit, example: make test c="--group e2e --stop-on-failure"
 	@$(eval c ?=)
 	@$(DOCKER_COMP) exec -e APP_ENV=test php bin/phpunit $(c)
@@ -74,7 +81,7 @@ ddd: sf
 dmm: c=doctrine:migrations:migrate
 dmm: sf
 
-dfl: c=doctrine:fixtures:load
+dfl: c=doctrine:fixtures:load --no-interaction
 dfl: sf
 
 ## —— Project init and install
