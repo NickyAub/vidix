@@ -7,17 +7,17 @@
 
         {% for message in app.flashes('error') %}
             <div class="alert alert-danger mt-4">
-                {{ message }}
+                {{ message|raw }}
             </div>
         {% endfor %}
 
         <h1>{{ 'Edit'|trans }} "{{ movie.title }}"</h1>
 
-        {{ form_start(form) }}
+        {{ form_start(form, {'attr': { 'class': is_submitted and not is_valid ? 'is-invalid' : '' }}) }}
         <div class="form-group">
             {{ form_label(form.title) }}
             {{ form_widget(form.title) }}
-            <div class="form-error">
+            <div class="form-error invalid-feedback">
                 {{ form_errors(form.title) }}
             </div>
         </div>
@@ -25,7 +25,7 @@
         <div class="form-group">
             {{ form_label(form.description) }}
             {{ form_widget(form.description) }}
-            <div class="form-error">
+            <div class="form-error invalid-feedback">
                 {{ form_errors(form.description) }}
             </div>
         </div>
@@ -33,7 +33,7 @@
         <div class="form-group">
             {{ form_label(form.releaseDate) }}
             {{ form_widget(form.releaseDate) }}
-            <div class="form-error">
+            <div class="form-error invalid-feedback">
                 {{ form_errors(form.releaseDate) }}
             </div>
         </div>
@@ -41,7 +41,7 @@
         <div class="form-group">
             {{ form_label(form.characters) }}
             {{ form_widget(form.characters) }}
-            <div class="form-error">
+            <div class="form-error invalid-feedback">
                 {{ form_errors(form.characters) }}
             </div>
         </div>

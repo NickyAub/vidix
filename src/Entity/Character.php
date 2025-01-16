@@ -6,8 +6,13 @@ use App\Repository\CharacterRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 #[ORM\Entity(repositoryClass: CharacterRepository::class)]
+#[UniqueEntity(
+    fields: ['name', 'movie'],
+    message: 'Already existing character'
+)]
 class Character
 {
     #[ORM\Id]

@@ -60,9 +60,11 @@ Movie successfully added: Film ajouté avec succès
 Movie successfully modified: Film modifié avec succès
 Movie successfully removed: Film supprimé avec succès
 An error occurred during movie edit: Une erreur est survenue lors de la modification de ce film
+An error occurred during movie creation: Une erreur est survenue lors de la création de ce film
 Character successfully created: Personnage créé avec succès
 Character successfully modified: Personnage modifié avec succès
 An error occurred during character edit: Une erreur est survenue lors de la modification de ce personnage
+An error occurred during character creation: Une erreur est survenue lors de la création de ce personnage
 No movie found in database: Aucun film trouvé pour le moment
 Do you really want to remove: Voulez-vous vraiment supprimer
 You may want to generate fake data with following command: Peut-être que vous pouvez remplir la base avec des fausses données en exécutant

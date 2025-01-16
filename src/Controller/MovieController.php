@@ -82,9 +82,14 @@ class MovieController extends AbstractController
 
             return $this->redirectToRoute('app.movies');
         }
+        else if ($form->isSubmitted()) {
+            $this->addFlash('error', $translator->trans('An error occurred during movie creation').($form->getErrors()->count() ? '<br>'.$form->getErrors()->__toString(): ''));
+        }
 
         return $this->render('views/movie/new.html.twig', [
             'form' => $form->createView(),
+            'is_submitted' => $form->isSubmitted(),
+            'is_valid' => $form->isSubmitted() && $form->isValid(),
         ]);
     }
 
@@ -120,15 +125,15 @@ class MovieController extends AbstractController
 
             return $this->redirectToRoute('app.movie.view', ['id' => $movie->getId()]);
         }
-        // else if ($form->isSubmitted()) {
-        //     $this->addFlash('error', $translator->trans('An error occurred during movie edit'));
-
-        //     return $this->redirectToRoute('app.movie.edit', ['id' => $movie->getId()]);
-        // }
+        else if ($form->isSubmitted()) {
+            $this->addFlash('error', $translator->trans('An error occurred during movie edit').($form->getErrors()->count() ? '<br>'.$form->getErrors()->__toString(): ''));
+        }
 
         return $this->render('views/movie/edit.html.twig', [
             'movie' => $movie,
             'form' => $form->createView(),
+            'is_submitted' => $form->isSubmitted(),
+            'is_valid' => $form->isSubmitted() && $form->isValid(),
         ]);
     }
 

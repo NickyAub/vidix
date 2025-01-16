@@ -8,3 +8,7 @@
 .sorted > .desc::after {
     content: "\2191";
 }
+
+.is-invalid .invalid-feedback {
+    display: block;
+}

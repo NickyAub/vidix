@@ -4,13 +4,20 @@
 
 {% block body %}
     <div class="container mt-4">
+
+        {% for message in app.flashes('error') %}
+            <div class="alert alert-danger mt-4">
+                {{ message|raw }}
+            </div>
+        {% endfor %}
+
         <h1>{{ 'Add new character'|trans }}</h1>
 
-        {{ form_start(form) }}
+        {{ form_start(form, {'attr': { 'class': is_submitted and not is_valid ? 'is-invalid' : '' }}) }}
         <div class="form-group">
             {{ form_label(form.name) }}
             {{ form_widget(form.name) }}
-            <div class="form-error">
+            <div class="form-error invalid-feedback">
                 {{ form_errors(form.name) }}
             </div>
         </div>
@@ -18,7 +25,7 @@
         <div class="form-group mt-4">
             {{ form_label(form.movie) }}
             {{ form_widget(form.movie) }}
-            <div class="form-error">
+            <div class="form-error invalid-feedback">
                 {{ form_errors(form.movie) }}
             </div>
         </div>

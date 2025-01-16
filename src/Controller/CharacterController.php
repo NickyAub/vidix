@@ -49,10 +49,15 @@ class CharacterController extends AbstractController
             }
             return $route;
         }
+        else if ($form->isSubmitted()) {
+            $this->addFlash('error', $translator->trans('An error occurred during character creation'.($form->getErrors()->count() ? '<br>'.$form->getErrors()->__toString(): '')));
+        }
 
         return $this->render('views/character/new.html.twig', [
             'character' => $character,
-            'form' => $form->createView()
+            'form' => $form->createView(),
+            'is_submitted' => $form->isSubmitted(),
+            'is_valid' => $form->isSubmitted() && $form->isValid(),
         ]);
     }
 
@@ -82,15 +87,15 @@ class CharacterController extends AbstractController
 
             return $this->redirectToRoute('app.movie.view', ['id' => $character->getMovie()->getId()]);
         }
-        // else if ($form->isSubmitted()) {
-        //     $this->addFlash('error', $translator->trans('An error occurred during character edit'));
-
-        //     return $this->redirectToRoute('app.character.edit', ['id' => $character->getId()]);
-        // }
+        else if ($form->isSubmitted()) {
+            $this->addFlash('error', $translator->trans('An error occurred during character edit').($form->getErrors()->count() ? '<br>'.$form->getErrors()->__toString(): ''));
+        }
 
         return $this->render('views/character/edit.html.twig', [
             'character' => $character,
-            'form' => $form->createView()
+            'form' => $form->createView(),
+            'is_submitted' => $form->isSubmitted(),
+            'is_valid' => $form->isSubmitted() && $form->isValid(),
         ]);
     }
 }
