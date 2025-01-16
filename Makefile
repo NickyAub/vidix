@@ -11,7 +11,7 @@ SYMFONY  = $(PHP) bin/console
 
 # Misc
 .DEFAULT_GOAL = help
-.PHONY        : help build up up-detach start down logs sh composer vendor sf cc test
+.PHONY        : help build build-no-cache up up-detach start start-detach down logs sh bash enter inside container composer vendor compinstall sf cc cache ddc create ddd drop migration dmm migrate dfl fixtures test
 
 ## —— 🎵 🐳 The Symfony Docker Makefile 🐳 🎵 ——————————————————————————————————
 help: ## Outputs this help screen
@@ -19,6 +19,9 @@ help: ## Outputs this help screen
 
 ## —— Docker 🐳 ————————————————————————————————————————————————————————————————
 build: ## Builds the Docker images
+	@$(DOCKER_COMP) build --pull
+
+build-no-cache: ## Builds the Docker images from scratch with --no-cache
 	@$(DOCKER_COMP) build --pull --no-cache
 
 up: ## Start the docker hub with logs
@@ -43,9 +46,11 @@ sh: ## Connect to the FrankenPHP container
 bash: ## Get inside main container
 	@$(PHP_CONT) /bin/bash
 
-enter: bash
+enter: bash ## Alias for `bash` shortcut
 
-inside: bash
+inside: bash ## Alias for `bash` shortcut
+
+container: bash ## Alias for `bash` shortcut
 
 test: ## Start tests with phpunit, pass the parameter "c=" to add options to phpunit, example: make test c="--group e2e --stop-on-failure"
 	@$(eval c ?=)
@@ -61,7 +66,7 @@ vendor: ## Install vendors according to the current composer.lock file
 vendor: c=install --prefer-dist --no-dev --no-progress --no-scripts --no-interaction
 vendor: composer
 
-compinstall: c=install
+compinstall: c=install ## Install composer packages based on composer.lock (env=dev)
 compinstall: composer
 
 ## —— Symfony 🎵 ———————————————————————————————————————————————————————————————
@@ -72,17 +77,27 @@ sf: ## List all Symfony commands or pass the parameter "c=" to run a given comma
 cc: c=c:c ## Clear the cache
 cc: sf
 
-ddc: c=doctrine:database:create
+cache: cc ## Alias for `cc` shortcut
+
+ddc: c=doctrine:database:create ## Create database with Doctrine command
 ddc: sf
 
-ddd: c=doctrine:database:drop --force
+create: ddc ## Alias for `ddc` shortcut
+
+ddd: c=doctrine:database:drop --force ## Force to drop database with Doctrine command
 ddd: sf
 
-dmm: c=doctrine:migrations:migrate
+drop: ddd ## Alias for `ddd` shortcut
+
+migration: c=make:migration ## Create a new migration based on database changes
+migration: sf
+
+dmm: c=doctrine:migrations:migrate ## Process migrations with Doctrine command to amend database
 dmm: sf
 
-dfl: c=doctrine:fixtures:load --no-interaction
+migrate: dmm ## Alias for `dmm` shortcut
+
+dfl: c=doctrine:fixtures:load --no-interaction ## Load App fixtures directly with no confirmation
 dfl: sf
 
-## —— Project init and install
-install: compinstall ddc dmm dfl
+fixtures: dfl ## Alias for `dfl` shortcut
