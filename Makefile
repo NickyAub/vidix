@@ -11,7 +11,7 @@ SYMFONY  = $(PHP) bin/console
 
 # Misc
 .DEFAULT_GOAL = help
-.PHONY        : help build build-no-cache up up-detach start start-detach down logs sh bash enter inside container composer vendor compinstall sf cc cache ddc create ddd drop migration dmm migrate dfl fixtures test
+.PHONY        : help build build-no-cache up up-detach start start-detach start-fresh down logs sh bash enter inside container composer vendor compinstall sf cc cache ddc create ddd drop migration dmm migrate dfl fixtures test
 
 ## —— 🎵 🐳 The Symfony Docker Makefile 🐳 🎵 ——————————————————————————————————
 help: ## Outputs this help screen
@@ -19,7 +19,7 @@ help: ## Outputs this help screen
 
 ## —— Docker 🐳 ————————————————————————————————————————————————————————————————
 build: ## Builds the Docker images
-	@$(DOCKER_COMP) build --pull
+	@$(DOCKER_COMP) build
 
 build-no-cache: ## Builds the Docker images from scratch with --no-cache
 	@$(DOCKER_COMP) build --pull --no-cache
@@ -33,6 +33,8 @@ up-detach: ## Start the docker hub in detached mode (no logs)
 start: build up ## Build and start the containers
 
 start-detach: build up-detach ## Build and start the containers in detached mode
+
+start-fresh: build-no-cache up ## Build and attempt to pull a newer version of images, then start the containers
 
 down: ## Stop the docker hub
 	@$(DOCKER_COMP) down --remove-orphans
