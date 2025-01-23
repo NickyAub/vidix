@@ -9,13 +9,13 @@
 {% block body %}
     <div class="container mt-4">
         <h1>{{ 'Movies list'|trans }} <span class="badge text-bg-secondary">{{ movies.getTotalItemCount }}</span></h1>
-        <div class="d-flex align-items-center justify-content-between mt-4">
+        <div class="d-flex align-items-center justify-content-between flex-wrap mt-4">
             <div class="mb-3">
-                <a href="{{ path('app.movie.new') }}" class="icon-link btn btn-primary">{{ 'Add movie'|trans }}
+                <a href="{{ path('app.movie.new') }}" class="icon-link btn btn-primary mb-1">{{ 'Add movie'|trans }}
                     {% include '_parts/components/icons/plus_square.html.twig' %}
                 </a>
 
-                <a href="{{ path('app.character.new') }}" class="icon-link btn btn-outline-primary">{{ 'Add new character'|trans }}
+                <a href="{{ path('app.character.new') }}" class="icon-link btn btn-outline-primary mb-1">{{ 'Add new character'|trans }}
                     {% include '_parts/components/icons/plus_square.html.twig' %}
                 </a>
             </div>

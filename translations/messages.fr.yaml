@@ -67,5 +67,6 @@ An error occurred during character edit: Une erreur est survenue lors de la modi
 An error occurred during character creation: Une erreur est survenue lors de la création de ce personnage
 No movie found in database: Aucun film trouvé pour le moment
 Do you really want to remove: Voulez-vous vraiment supprimer
+Characters can be added later on movie edit page: Les personnages pourront être ajoutés sur la page d'édition du film ultérieurement
 You may want to generate fake data with following command: Peut-être que vous pouvez remplir la base avec des fausses données en exécutant
 or create a movie manually with button above: ou alors il est aussi possible de créer un film à la main via le bouton ci-dessus

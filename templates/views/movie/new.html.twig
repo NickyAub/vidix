@@ -40,13 +40,16 @@
 
         <div class="form-group">
             {{ form_label(form.characters) }}
-            {{ form_widget(form.characters) }}
-            <div class="form-error invalid-feedback">
-                {{ form_errors(form.characters) }}
+            {{ form_widget(form.characters, {'attr': { 'class': 'd-none' }}) }}
+            <div>
+                <i>{{ 'Characters can be added later on movie edit page'|trans }}</i>
             </div>
+            {# <div class="form-error invalid-feedback">
+                {{ form_errors(form.characters) }}
+            </div> #}
         </div>
 
-        <div class="form-group mt-4 d-flex justify-content-between">
+        <div class="form-group mt-5 d-flex justify-content-between">
             {% include '_parts/components/link_back_movies.html.twig' with { 'label': 'Cancel'|trans, 'title': 'Cancel and go back to movies list'|trans } %}
             {{ form_widget(form.submit) }}
         </div>

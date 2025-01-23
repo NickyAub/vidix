@@ -33,6 +33,9 @@ class CharacterType extends AbstractType
             ])
             ->add('movie', EntityType::class, [
                 'class' => Movie::class,
+                'attr' => [
+                    'class' => 'form-select',
+                ],
                 'label' => 'Movie',
                 'choice_label' => 'title',
                 'required' => false,
@@ -40,7 +43,7 @@ class CharacterType extends AbstractType
             ])
             ->add('submit', SubmitType::class, [
                 'attr' => [
-                    'class' => 'btn btn-primary mt-4',
+                    'class' => 'btn btn-primary',
                 ],
                 'label' => 'Save',
             ])

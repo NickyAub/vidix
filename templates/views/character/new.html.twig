@@ -30,7 +30,7 @@
             </div>
         </div>
 
-        <div class="form-group mt-4 d-flex justify-content-between">
+        <div class="form-group mt-5 d-flex justify-content-between">
             {{ form_row(form.submit) }}
             {% if character.movie.id is defined %}
                 <a href="{{ path('app.movie.view', { 'id': character.movie.id }) }}" class="icon-link text-decoration-none" title="{{ 'Back to movie view'|trans }}">
